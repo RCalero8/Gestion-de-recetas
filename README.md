@@ -1,2 +1,3 @@
-# GESTI-N-DE-RECETAS
-PROYECTO DE DESARROLLO DE UNA API REST CON SPRING BOOT
+# Gestion de recetas
+Proyecto de desarrollo de una API Rest con Spring Boot
+
