@@ -3,9 +3,11 @@ package com.example.dam.salesianos.gestion_recetas.modal;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.*;
+
 
 @Entity
-@Data
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -16,6 +18,19 @@ public class Receta {
     @Column(unique = true)
     private String nombre;
     private Integer tiempoPreparacionMin;
-    private Enum dificultad;
-    
+    private Dificultad dificultad;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    @ManyToMany
+    @JoinTable(
+            name = "receta_ingredientes",
+            joinColumns = @JoinColumn(name = "receta_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
+
+    )
+    @Builder.Default
+    private Set<Ingrediente> ingredientes = new HashSet<>();
 }
