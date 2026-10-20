@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 
 public record CategoriaRequest(
         @NotBlank(message = "{categoria.nombre.notblank}")
-        @Size(max = 255, message = "{categoria.nombre.size}")
+        @Size(max = 100, message = "{categoria.nombre.size}")
         String nombre,
 
         @Size(max = 255, message = "{categoria.descripcion.size}")
