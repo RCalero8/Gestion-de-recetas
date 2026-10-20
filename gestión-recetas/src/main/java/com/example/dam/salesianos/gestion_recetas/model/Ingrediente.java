@@ -1,4 +1,4 @@
-package com.example.dam.salesianos.gestion_recetas.modal;
+package com.example.dam.salesianos.gestion_recetas.model;
 
 import jakarta.persistence.*;
 import lombok.*;
