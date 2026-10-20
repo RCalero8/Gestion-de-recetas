@@ -1,6 +1,6 @@
 package com.example.dam.salesianos.gestion_recetas.error;
 
-import com.example.dam.salesianos.gestion_recetas.error.notFound.EntidadNoEncontradaException;
+import com.example.dam.salesianos.gestion_recetas.error.notFound.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private final MessageSource messageSource;
 
     @ExceptionHandler
-    public ProblemDetail EntidadesNoEncontradas(EntidadNoEncontradaException ex, Locale locale) {
+    public ProblemDetail EntidadesNoEncontradas(EntityNotFoundException ex, Locale locale) {
         ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
         problem.setTitle(messageSource.getMessage(
                 ex.getClaveMensaje() + ".titulo",

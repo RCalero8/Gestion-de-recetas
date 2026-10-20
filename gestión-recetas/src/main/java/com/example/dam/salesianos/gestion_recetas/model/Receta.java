@@ -22,7 +22,7 @@ public class Receta {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+    private Category categoria;
 
     @ManyToMany
     @JoinTable(

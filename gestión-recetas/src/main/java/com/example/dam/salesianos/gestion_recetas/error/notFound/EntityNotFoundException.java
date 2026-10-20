@@ -1,10 +1,10 @@
 package com.example.dam.salesianos.gestion_recetas.error.notFound;
 
-public class EntidadNoEncontradaException extends RuntimeException{
+public class EntityNotFoundException extends RuntimeException{
     private final String claveMensaje;
     private final Long id;
 
-    public EntidadNoEncontradaException(String claveMensaje, Long id){
+    public EntityNotFoundException(String claveMensaje, Long id){
         super(claveMensaje + ": " + id);
         this.claveMensaje = claveMensaje;
         this.id = id;
