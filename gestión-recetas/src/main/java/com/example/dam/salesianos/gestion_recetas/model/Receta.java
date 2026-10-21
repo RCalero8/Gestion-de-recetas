@@ -32,5 +32,5 @@ public class Receta {
 
     )
     @Builder.Default
-    private Set<Ingrediente> ingredientes = new HashSet<>();
+    private Set<Ingredient> ingredientes = new HashSet<>();
 }

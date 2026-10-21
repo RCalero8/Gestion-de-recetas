@@ -4,7 +4,7 @@ import com.example.dam.salesianos.gestion_recetas.dtos.CategoryRequest;
 import com.example.dam.salesianos.gestion_recetas.dtos.CategoryResponse;
 import com.example.dam.salesianos.gestion_recetas.service.CategoryService;
 import jakarta.validation.Valid;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

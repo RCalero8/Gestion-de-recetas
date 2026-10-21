@@ -10,7 +10,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Ingrediente {
+public class Ingredient {
     @Id
     @GeneratedValue
     private Long id;

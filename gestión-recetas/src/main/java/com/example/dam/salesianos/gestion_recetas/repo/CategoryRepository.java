@@ -4,5 +4,5 @@ import com.example.dam.salesianos.gestion_recetas.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    boolean existsByName(String nombre);
+    boolean existsByNombre(String nombre);
 }
