@@ -33,34 +33,46 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final MessageSource messageSource;
 
+    // 404: Categoría, Receta o Ingrediente no encontrados
     @ExceptionHandler(EntityNotFoundException.class)
     public ProblemDetail handleEntityNotFound(EntityNotFoundException ex, Locale locale) {
         ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
         problem.setTitle(messageSource.getMessage(
-                ex.getClaveMensaje() + ".titulo",
-                null,
-                locale));
+                ex.getClaveMensaje() + ".titulo", null, locale));
         problem.setDetail(messageSource.getMessage(
-                ex.getClaveMensaje() + ".detalle",
-                new Object[]{ex.getId()},
-                locale));
+                ex.getClaveMensaje() + ".detalle", new Object[]{ex.getId()}, locale));
         return problem;
     }
 
+    // 400: tiempo de preparación <= 0
+    @ExceptionHandler(TiempoInvalidoException.class)
+    public ProblemDetail handleTiempoInvalido(TiempoInvalidoException ex, Locale locale) {
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problem.setTitle(messageSource.getMessage(
+                "receta.tiempo.invalido.titulo", null, locale));
+        problem.setDetail(messageSource.getMessage(
+                "receta.tiempo.invalido.detalle",
+                new Object[]{ex.getTiempoPreparacionMin()}, locale));
+        return problem;
+    }
+
+    // 400: validación a nivel de parámetros (path, query...)
     @ExceptionHandler(ConstraintViolationException.class)
-    public ProblemDetail handleConstraintViolation(ConstraintViolationException ex) {
-        ProblemDetail result = ProblemDetail
-                .forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+    public ProblemDetail handleConstraintViolation(ConstraintViolationException ex, Locale locale) {
+        ProblemDetail result = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                messageSource.getMessage("validacion.error.detalle", null, locale));
+        result.setTitle(messageSource.getMessage("validacion.error.titulo", null, locale));
 
         List<ApiValidationSubError> subErrors = ex.getConstraintViolations().stream()
                 .map(ApiValidationSubError::from)
                 .toList();
 
         result.setProperty("invalid-params", subErrors);
-
         return result;
     }
 
+    // 400: validación del cuerpo (@Valid sobre los DTOs)
     @Override
     protected @Nullable ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
@@ -68,10 +80,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatusCode status,
             WebRequest request) {
 
-        ProblemDetail result = ProblemDetail
-                .forStatusAndDetail(HttpStatus.BAD_REQUEST, "Error de validación");
-
         Locale locale = LocaleContextHolder.getLocale();
+
+        ProblemDetail result = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                messageSource.getMessage("validacion.error.detalle", null, locale));
+        result.setTitle(messageSource.getMessage("validacion.error.titulo", null, locale));
 
         List<ApiValidationSubError> subErrors = ex.getAllErrors().stream()
                 .map(error -> ApiValidationSubError.from(error, messageSource, locale))
@@ -79,18 +93,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         result.setProperty("invalid-params", subErrors);
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(result);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
 
     @Builder
     record ApiValidationSubError(
             String object,
             String message,
-            @JsonInclude(JsonInclude.Include.NON_NULL)
-            String field,
-            @JsonInclude(JsonInclude.Include.NON_NULL)
-            Object rejectedValue
+            @JsonInclude(JsonInclude.Include.NON_NULL) String field,
+            @JsonInclude(JsonInclude.Include.NON_NULL) Object rejectedValue
     ) {
 
         public ApiValidationSubError(String object, String message) {
@@ -107,12 +118,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                         .field(fieldError.getField())
                         .rejectedValue(fieldError.getRejectedValue())
                         .build();
-            } else {
-                return ApiValidationSubError.builder()
-                        .object(error.getObjectName())
-                        .message(mensajeTraducido)
-                        .build();
             }
+            return ApiValidationSubError.builder()
+                    .object(error.getObjectName())
+                    .message(mensajeTraducido)
+                    .build();
         }
 
         public static ApiValidationSubError from(ConstraintViolation<?> v) {

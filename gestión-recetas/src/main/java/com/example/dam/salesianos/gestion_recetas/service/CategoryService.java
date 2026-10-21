@@ -1,7 +1,7 @@
 package com.example.dam.salesianos.gestion_recetas.service;
 
-import com.example.dam.salesianos.gestion_recetas.dtos.CategoryRequest;
-import com.example.dam.salesianos.gestion_recetas.dtos.CategoryResponse;
+import com.example.dam.salesianos.gestion_recetas.dto.CategoryRequest;
+import com.example.dam.salesianos.gestion_recetas.dto.CategoryResponse;
 import com.example.dam.salesianos.gestion_recetas.error.notFound.CategoryNotFoundException;
 import com.example.dam.salesianos.gestion_recetas.model.Category;
 import com.example.dam.salesianos.gestion_recetas.repo.CategoryRepository;

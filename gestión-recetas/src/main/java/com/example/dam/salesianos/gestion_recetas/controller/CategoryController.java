@@ -1,7 +1,7 @@
 package com.example.dam.salesianos.gestion_recetas.controller;
 
-import com.example.dam.salesianos.gestion_recetas.dtos.CategoryRequest;
-import com.example.dam.salesianos.gestion_recetas.dtos.CategoryResponse;
+import com.example.dam.salesianos.gestion_recetas.dto.CategoryRequest;
+import com.example.dam.salesianos.gestion_recetas.dto.CategoryResponse;
 import com.example.dam.salesianos.gestion_recetas.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
