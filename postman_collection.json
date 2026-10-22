@@ -1,0 +1,492 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Gestión de Recetas API",
+    "description": "Colección completa de peticiones para la API REST de Gestión de Recetas y Categorías, incluyendo endpoints CRUD, relaciones Muchos a Muchos (Receta - Ingrediente) y casos de prueba de errores.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Categorías",
+      "item": [
+        {
+          "name": "Obtener todas las categorías",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categorias",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categorias"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener categoría por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categorias/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categorias",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear categoría",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Postres\",\n  \"descripcion\": \"Recetas dulces y delicias para el final de la comida\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/categorias",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categorias"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar categoría",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Postres Tradicionales\",\n  \"descripcion\": \"Recetas de postres caseros y tradicionales\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/categorias/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categorias",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar categoría",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categorias/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categorias",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ingredientes",
+      "item": [
+        {
+          "name": "Obtener todos los ingredientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/ingredientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ingredientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener ingrediente por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/ingredientes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ingredientes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear ingrediente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Aceite de Oliva Extra Virgen\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/ingredientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ingredientes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Recetas",
+      "item": [
+        {
+          "name": "Obtener todas las recetas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener receta por ID (con ingredientes)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear receta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Gazpacho Andaluz\",\n  \"tiempoPreparacionMin\": 20,\n  \"dificultad\": \"FACIL\",\n  \"categoriaId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar receta",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Gazpacho Andaluz Tradicional\",\n  \"tiempoPreparacionMin\": 25,\n  \"dificultad\": \"FACIL\",\n  \"categoriaId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar receta",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Añadir ingrediente a receta (M:M)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ingredienteId\": 1,\n  \"cantidad\": 100,\n  \"unidadMedida\": \"ml\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas/1/ingredientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas",
+                "1",
+                "ingredientes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Pruebas de Errores (Validación y Excepciones)",
+      "item": [
+        {
+          "name": "Error 404 - Categoria No Encontrada",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categorias/999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categorias",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 404 - Receta No Encontrada",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas/999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 400 - Tiempo de Preparación Inválido (<= 0)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Receta Con Tiempo Incorrecto\",\n  \"tiempoPreparacionMin\": -5,\n  \"dificultad\": \"FACIL\",\n  \"categoriaId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 400 - Nombre de Receta Duplicado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Gazpacho Andaluz\",\n  \"tiempoPreparacionMin\": 15,\n  \"dificultad\": \"FACIL\",\n  \"categoriaId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Error 400/409 - Ingrediente Ya Añadido a Receta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ingredienteId\": 1,\n  \"cantidad\": 50,\n  \"unidadMedida\": \"ml\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/recetas/1/ingredientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recetas",
+                "1",
+                "ingredientes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}
