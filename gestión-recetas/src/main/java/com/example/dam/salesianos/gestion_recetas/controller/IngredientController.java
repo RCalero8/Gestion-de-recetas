@@ -1,5 +1,6 @@
 package com.example.dam.salesianos.gestion_recetas.controller;
 
+import com.example.dam.salesianos.gestion_recetas.docs.ApiExamples;
 import com.example.dam.salesianos.gestion_recetas.dto.Edit.EditIngredientDto;
 import com.example.dam.salesianos.gestion_recetas.dto.Getter.GetIngredientDetail;
 import com.example.dam.salesianos.gestion_recetas.service.IngredientService;
