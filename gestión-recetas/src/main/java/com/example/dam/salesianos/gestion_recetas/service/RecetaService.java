@@ -3,6 +3,11 @@ package com.example.dam.salesianos.gestion_recetas.service;
 import com.example.dam.salesianos.gestion_recetas.dto.Edit.EditRecetaDto;
 import com.example.dam.salesianos.gestion_recetas.dto.Edit.EditRecetaIngredienteDto;
 import com.example.dam.salesianos.gestion_recetas.dto.Getter.GetRecetaDetail;
+import com.example.dam.salesianos.gestion_recetas.error.IngredienteYaAnidadoException;
+import com.example.dam.salesianos.gestion_recetas.error.TiempoInvalidoException;
+import com.example.dam.salesianos.gestion_recetas.error.notFound.CategoryNotFoundException;
+import com.example.dam.salesianos.gestion_recetas.error.notFound.IngredientNotFoundException;
+import com.example.dam.salesianos.gestion_recetas.error.notFound.RecetaNotFoundException;
 import com.example.dam.salesianos.gestion_recetas.model.Category;
 import com.example.dam.salesianos.gestion_recetas.model.Ingredient;
 import com.example.dam.salesianos.gestion_recetas.model.Receta;
@@ -73,7 +78,7 @@ public class RecetaService {
         boolean yaAnadido = receta.getIngredientes().stream()
                 .anyMatch(ri -> ri.getIngrediente().getId().equals(ingrediente.getId()));
         if (yaAnadido) {
-            throw new IngredienteYaAnadidoException(receta.getNombre(), ingrediente.getNombre());
+            throw new IngredienteYaAnidadoException(receta.getNombre(), ingrediente.getNombre());
         }
 
         // cascade = ALL en Receta.ingredientes: la fila intermedia se inserta al confirmar la transacción

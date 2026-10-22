@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -55,8 +56,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     // 409: el ingrediente ya estaba en la receta
-    @ExceptionHandler(IngredienteYaAnadidoException.class)
-    public ProblemDetail handleIngredienteYaAnadido(IngredienteYaAnadidoException ex, Locale locale) {
+    @ExceptionHandler(IngredienteYaAnidadoException.class)
+    public ProblemDetail handleIngredienteYaAnadido(IngredienteYaAnidadoException ex, Locale locale) {
         ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.CONFLICT);
         problem.setTitle(msg("receta.ingrediente.duplicado.titulo", null, locale));
         problem.setDetail(msg("receta.ingrediente.duplicado.detalle",
