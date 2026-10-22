@@ -8,12 +8,11 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 public class ValidationConfig {
-
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource =
                 new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:menssages/messages");
+        messageSource.setBasename("classpath: messages/errors");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
