@@ -3,6 +3,7 @@ package com.example.dam.salesianos.gestion_recetas.dto.Edit;
 import com.example.dam.salesianos.gestion_recetas.model.Category;
 import com.example.dam.salesianos.gestion_recetas.model.Dificultad;
 import com.example.dam.salesianos.gestion_recetas.model.Receta;
+import com.example.dam.salesianos.gestion_recetas.validation.NombreRecetaUnico;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
