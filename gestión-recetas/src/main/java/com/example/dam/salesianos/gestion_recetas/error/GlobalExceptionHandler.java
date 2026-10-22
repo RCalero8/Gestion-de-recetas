@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,7 +59,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ProblemDetail handleIngredienteYaAnadido(IngredienteYaAnidadoException ex, Locale locale) {
         ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.CONFLICT);
         problem.setTitle(msg("receta.ingrediente.duplicado.titulo", null, locale));
-        problem.setDetail(msg("receta.ingrediente.duplicado.detalle",
+        problem.setDetail(msg("receta.ingredient.duplicado.detalle",
                 new Object[]{ex.getReceta(), ex.getIngrediente()}, locale));
         return problem;
     }
