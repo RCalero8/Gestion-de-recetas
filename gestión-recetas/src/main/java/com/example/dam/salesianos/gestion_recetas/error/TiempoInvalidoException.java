@@ -4,10 +4,14 @@ import lombok.Getter;
 
 @Getter
 public class TiempoInvalidoException extends RuntimeException {
-    private final Integer tiempoPreparacionMin;
+    private final Integer tiempo;
 
-    public TiempoInvalidoException(Integer tiempoPreparacionMin) {
-        super("receta.tiempo.invalido");
-        this.tiempoPreparacionMin = tiempoPreparacionMin;
+    public TiempoInvalidoException(Integer tiempo) {
+        super();
+        this.tiempo = tiempo;
+    }
+
+    public Integer getTiempo() {
+        return tiempo;
     }
 }

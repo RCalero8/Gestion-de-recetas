@@ -17,8 +17,4 @@ public class Ingredient {
 
     @Column(unique = true)
     private String nombre;
-
-    @ManyToMany
-    @Builder.Default
-    private Set<Receta> recetas = new HashSet<>();
 }

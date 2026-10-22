@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,6 +34,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final MessageSource messageSource;
 
+    //404 tiempo invalido
+    @ExceptionHandler(TiempoInvalidoException.class)
+    public ProblemDetail handleTiempoInvalido(TiempoInvalidoException ex, Locale locale) {
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problem.setTitle(messageSource.getMessage(
+                "receta.tiempo.invalido.titulo", null, locale));
+        problem.setDetail(messageSource.getMessage(
+                "receta.tiempo.invalido.detalle",
+                new Object[]{ex.getTiempo()}, locale));
+        return problem;
+    }
     // 404: Categoría, Receta o Ingrediente no encontrados
     @ExceptionHandler(EntityNotFoundException.class)
     public ProblemDetail handleEntityNotFound(EntityNotFoundException ex, Locale locale) {
@@ -44,17 +56,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problem;
     }
 
-    // 400: tiempo de preparación <= 0
-    @ExceptionHandler(TiempoInvalidoException.class)
-    public ProblemDetail handleTiempoInvalido(TiempoInvalidoException ex, Locale locale) {
-        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        problem.setTitle(messageSource.getMessage(
-                "receta.tiempo.invalido.titulo", null, locale));
-        problem.setDetail(messageSource.getMessage(
-                "receta.tiempo.invalido.detalle",
-                new Object[]{ex.getTiempoPreparacionMin()}, locale));
-        return problem;
-    }
+
 
     // 400: validación a nivel de parámetros (path, query...)
     @ExceptionHandler(ConstraintViolationException.class)

@@ -14,12 +14,14 @@ public record RecetaRequest(
 
         @NotNull(message = "{receta.tiempoPreparacionMin.null}")
         Integer tiempoPreparacionMin,
+
         @NotNull(message = "{receta.dificultad.null}")
         Dificultad dificultad,
+
         @NotNull(message = "{receta.categoria.null}")
         Long categoriaId
 
-        ) {
+) {
     public Receta toEntity(Category categoria) {
         return Receta.builder()
                 .nombre(nombre)

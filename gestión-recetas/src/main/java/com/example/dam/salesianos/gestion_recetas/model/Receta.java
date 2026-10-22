@@ -24,13 +24,8 @@ public class Receta {
     @JoinColumn(name = "categoria_id")
     private Category categoria;
 
-    @ManyToMany
-    @JoinTable(
-            name = "receta_ingredientes",
-            joinColumns = @JoinColumn(name = "receta_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingrediente_id")
-
-    )
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true )
     @Builder.Default
-    private Set<Ingredient> ingredientes = new HashSet<>();
+    private Set<RecetaIngrediente> ingredientes = new HashSet<>();
+
 }

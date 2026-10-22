@@ -1,6 +1,5 @@
 package com.example.dam.salesianos.gestion_recetas.service;
 
-import com.example.dam.salesianos.gestion_recetas.dto.CategoryResponse;
 import com.example.dam.salesianos.gestion_recetas.dto.RecetaRequest;
 import com.example.dam.salesianos.gestion_recetas.dto.RecetaResponse;
 import com.example.dam.salesianos.gestion_recetas.error.TiempoInvalidoException;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RecetasService {
+public class RecetaService {
     private final RecetaRepository recetaRepository;
     private final CategoryRepository categoryRepository;
     //Obtener todas
@@ -29,52 +28,52 @@ public class RecetasService {
 
     //Obtener lor id
     public RecetaResponse getRecetaById(Long id){
-        return recetaRepository.findById(id)
-                .map(RecetaResponse::of)
-                .orElseThrow(() -> new RecetaNotFoundException(id));
+        return RecetaResponse.of(findRecetaById(id));
     }
 
+    //Añadir Receta
     public RecetaResponse addReceta(RecetaRequest recetaRequest) {
         validateReceta(recetaRequest);
         Category category = findCategoryById(recetaRequest.categoriaId());
         Receta receta = recetaRequest.toEntity(category);
-
-        // DEBE SER recetaRepository.save(receta)
         return RecetaResponse.of(recetaRepository.save(receta));
     }
 
+    //Actualizar Receta
     public RecetaResponse updateReceta(Long id, RecetaRequest recetaRequest) {
-        return recetaRepository.findById(id)
-                .map(r -> {
-                    validateReceta(recetaRequest);
-                    Category category = findCategoryById(recetaRequest.categoriaId());
+        Receta receta = findRecetaById(id);
+        validateReceta(recetaRequest);
+        Category categoria = findCategoryById(recetaRequest.categoriaId());
 
-                    r.setNombre(recetaRequest.nombre());
-                    r.setTiempoPreparacionMin(recetaRequest.tiempoPreparacionMin());
-                    r.setDificultad(recetaRequest.dificultad());
-                    r.setCategoria(category);
+        receta.setNombre(recetaRequest.nombre());
+        receta.setTiempoPreparacionMin(recetaRequest.tiempoPreparacionMin());
+        receta.setDificultad(recetaRequest.dificultad());
+        receta.setCategoria(categoria);
 
-                    // DEBE SER recetaRepository.save(r)
-                    return RecetaResponse.of(recetaRepository.save(r));
-                })
-                .orElseThrow(() -> new RecetaNotFoundException(id));
+        return RecetaResponse.of(recetaRepository.save(receta));
     }
 
+    //Borrar Receta
     public void deleteReceta(Long id) {
-        if (!recetaRepository.existsById(id)) {
-            throw new RecetaNotFoundException(id);
-        }
-        recetaRepository.deleteById(id);
+       Receta receta = findRecetaById(id);
+       recetaRepository.delete(receta);
     }
 
+    //Validar Receta
     private void validateReceta(RecetaRequest recetaRequest) {
-        if (recetaRequest.tiempoPreparacionMin() <= 0) {
+        if (recetaRequest.tiempoPreparacionMin() != null && recetaRequest.tiempoPreparacionMin() <= 0) {
             throw new TiempoInvalidoException(recetaRequest.tiempoPreparacionMin());
         }
     }
 
+    //Encontrar Categoria
     private Category findCategoryById(Long categoryId) {
         return categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId));
+    }
+
+    private Receta findRecetaById(Long id) {
+        return recetaRepository.findById(id)
+                .orElseThrow(() -> new RecetaNotFoundException(id));
     }
 }

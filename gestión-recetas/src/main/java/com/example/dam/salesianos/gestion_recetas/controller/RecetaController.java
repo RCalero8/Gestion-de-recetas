@@ -2,7 +2,7 @@ package com.example.dam.salesianos.gestion_recetas.controller;
 
 import com.example.dam.salesianos.gestion_recetas.dto.RecetaRequest;
 import com.example.dam.salesianos.gestion_recetas.dto.RecetaResponse;
-import com.example.dam.salesianos.gestion_recetas.service.RecetasService;
+import com.example.dam.salesianos.gestion_recetas.service.RecetaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/v1/recetas")
 @RequiredArgsConstructor
 public class RecetaController {
-    private final RecetasService service;
+    private final RecetaService service;
 
     @GetMapping
     public List<RecetaResponse> findAll() {
@@ -37,9 +37,11 @@ public class RecetaController {
     }
 
     @PutMapping("/{id}")
-    public RecetaResponse update(@PathVariable Long id,
-                                 @Valid @RequestBody RecetaRequest request) {
-        return service.updateReceta(id, request);
+    public ResponseEntity<RecetaResponse> update(
+            @PathVariable Long id,
+            @Valid @RequestBody RecetaRequest request) {
+        RecetaResponse actualizada = service.updateReceta(id, request);
+        return ResponseEntity.ok(actualizada);
     }
 
     @DeleteMapping("/{id}")
