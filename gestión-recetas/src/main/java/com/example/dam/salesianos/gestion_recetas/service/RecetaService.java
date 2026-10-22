@@ -18,5 +18,5 @@ public class RecetaService {
     private final CategoryRepository categoryRepository;
     private final IngredientRepository ingredientRepository;
 
-  
+
 }

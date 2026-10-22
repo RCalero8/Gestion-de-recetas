@@ -1,6 +1,7 @@
 package com.example.dam.salesianos.gestion_recetas.controller;
 
 
+import com.example.dam.salesianos.gestion_recetas.dto.Getter.GetCategoryDetail;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;

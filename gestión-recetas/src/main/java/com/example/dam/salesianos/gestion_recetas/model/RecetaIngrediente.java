@@ -21,4 +21,9 @@ public class RecetaIngrediente {
     @ManyToOne
     @JoinColumn(name = "ingrediente_id")
     private Ingredient ingrediente;
+
+    private Double cantidad;
+
+    @Column(length = 50)
+    private String unidad;
 }

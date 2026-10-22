@@ -1,4 +1,4 @@
-package com.example.dam.salesianos.gestion_recetas.dto;
+package com.example.dam.salesianos.gestion_recetas.dto.Getter;
 
 import com.example.dam.salesianos.gestion_recetas.model.Dificultad;
 import com.example.dam.salesianos.gestion_recetas.model.Receta;
