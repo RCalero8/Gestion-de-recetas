@@ -1,0 +1,212 @@
+
+### Crear categoría
+POST {{baseUrl}}/api/v1/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Postres",
+  "descripcion": "Recetas dulces y delicias para el final de la comida"
+}
+
+> {%
+    client.global.set("categoriaId", response.body.id);
+%}
+
+### Obtener todas las categorías
+GET {{baseUrl}}/api/v1/categorias
+
+### Obtener categoría por ID
+GET {{baseUrl}}/api/v1/categorias/{{categoriaId}}
+
+### Editar categoría
+PUT {{baseUrl}}/api/v1/categorias/{{categoriaId}}
+Content-Type: application/json
+
+{
+  "nombre": "Postres Tradicionales",
+  "descripcion": "Recetas de postres caseros y tradicionales"
+}
+
+
+### ----------------------------------------------------------
+### 2. INGREDIENTES
+### ----------------------------------------------------------
+
+### Crear ingrediente
+POST {{baseUrl}}/api/v1/ingredientes
+Content-Type: application/json
+
+{
+  "nombre": "Aceite de Oliva Extra Virgen"
+}
+
+> {%
+    client.global.set("ingredienteId", response.body.id);
+%}
+
+### Obtener todos los ingredientes
+GET {{baseUrl}}/api/v1/ingredientes
+
+### Obtener ingrediente por ID
+GET {{baseUrl}}/api/v1/ingredientes/{{ingredienteId}}
+
+
+### ----------------------------------------------------------
+### 3. RECETAS
+### ----------------------------------------------------------
+
+### Crear receta
+POST {{baseUrl}}/api/v1/recetas
+Content-Type: application/json
+
+{
+  "nombre": "Gazpacho Andaluz",
+  "tiempoPreparacionMin": 20,
+  "dificultad": "FACIL",
+  "categoriaId": {{categoriaId}}
+}
+
+> {%
+    client.global.set("recetaId", response.body.id);
+%}
+
+### Obtener todas las recetas
+GET {{baseUrl}}/api/v1/recetas
+
+### Obtener receta por ID (con ingredientes)
+GET {{baseUrl}}/api/v1/recetas/{{recetaId}}
+
+### Editar receta
+PUT {{baseUrl}}/api/v1/recetas/{{recetaId}}
+Content-Type: application/json
+
+{
+  "nombre": "Gazpacho Andaluz Tradicional",
+  "tiempoPreparacionMin": 25,
+  "dificultad": "FACIL",
+  "categoriaId": {{categoriaId}}
+}
+
+### Añadir ingrediente a receta (M:M)
+POST {{baseUrl}}/api/v1/recetas/{{recetaId}}/ingredientes
+Content-Type: application/json
+
+{
+  "ingredienteId": {{ingredienteId}},
+  "cantidad": 100,
+  "unidad": "ml"
+}
+
+### Obtener la receta con el ingrediente ya añadido
+GET {{baseUrl}}/api/v1/recetas/{{recetaId}}
+
+
+### ----------------------------------------------------------
+### 4. PRUEBAS DE ERRORES (validación y excepciones)
+### ----------------------------------------------------------
+
+### Error 404 - Categoría no encontrada
+GET {{baseUrl}}/api/v1/categorias/999
+Accept-Language: es
+
+### Error 404 - Receta no encontrada
+GET {{baseUrl}}/api/v1/recetas/999
+Accept-Language: es
+
+### Error 404 - Ingrediente no encontrado
+GET {{baseUrl}}/api/v1/ingredientes/999
+Accept-Language: es
+
+### Error 404 - Crear receta con una categoría que no existe
+POST {{baseUrl}}/api/v1/recetas
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "nombre": "Receta Con Categoria Inexistente",
+  "tiempoPreparacionMin": 10,
+  "dificultad": "FACIL",
+  "categoriaId": 999
+}
+
+### Error 400 - Tiempo de preparación inválido (<= 0)
+POST {{baseUrl}}/api/v1/recetas
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "nombre": "Receta Con Tiempo Incorrecto",
+  "tiempoPreparacionMin": -5,
+  "dificultad": "FACIL",
+  "categoriaId": {{categoriaId}}
+}
+
+### Error 400 - Validación de campos (cuerpo vacío)
+POST {{baseUrl}}/api/v1/recetas
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "nombre": "",
+  "tiempoPreparacionMin": null,
+  "dificultad": null,
+  "categoriaId": null
+}
+
+### Error 400 - Mismo error de validación en inglés (internacionalización)
+POST {{baseUrl}}/api/v1/recetas
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "nombre": "",
+  "tiempoPreparacionMin": null,
+  "dificultad": null,
+  "categoriaId": null
+}
+
+### Error 400 - Nombre de receta duplicado (validación personalizada)
+### Usa el nombre con el que quedó la receta tras la petición "Editar receta"
+POST {{baseUrl}}/api/v1/recetas
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "nombre": "Gazpacho Andaluz Tradicional",
+  "tiempoPreparacionMin": 15,
+  "dificultad": "FACIL",
+  "categoriaId": {{categoriaId}}
+}
+
+### Error 409 - Ingrediente ya añadido a la receta
+POST {{baseUrl}}/api/v1/recetas/{{recetaId}}/ingredientes
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "ingredienteId": {{ingredienteId}},
+  "cantidad": 50,
+  "unidad": "ml"
+}
+
+### Error 404 - Añadir un ingrediente que no existe
+POST {{baseUrl}}/api/v1/recetas/{{recetaId}}/ingredientes
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "ingredienteId": 999,
+  "cantidad": 50,
+  "unidad": "ml"
+}
+
+
+### ----------------------------------------------------------
+### 5. ELIMINAR (al final, para no romper las peticiones anteriores)
+### ----------------------------------------------------------
+
+### Eliminar receta
+DELETE {{baseUrl}}/api/v1/recetas/{{recetaId}}
+
+### Eliminar categoría (ya sin recetas asociadas)
+DELETE {{baseUrl}}/api/v1/categorias/{{categoriaId}}
